@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors"
+import connect from "./config/connect.js";
 const app = express()
 
 

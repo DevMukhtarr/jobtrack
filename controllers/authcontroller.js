@@ -1,12 +1,12 @@
-import User from "../models/user";
-import bcrypt from "bcrpytjs"
+import User from "../models/user.js";
+import bcrypt from "bcryptjs"
 import jwt  from "jsonwebtoken";
 
 // new user sign up
 export const signUp = async (req, res) => {
     const { username, password, confirm_password } = req.body
 
-    if(!username && password && confirm_password){
+    if(!(username && password && confirm_password)){
         return res.status(400).send("All inputs are required");
     }
 
@@ -34,13 +34,12 @@ export const signUp = async (req, res) => {
     // create new user
     const newUser = await User.create({
         username: username,
-        email: email,
         password: encryptedPassword,
     })
 
     const jwt_token = jwt.sign({
         user_id: newUser._id,
-        email: email
+        username: username
     }, process.env.JWT_TOKEN_KEY, {
         expiresIn: "10m",
     })
@@ -68,14 +67,14 @@ export const signIn = async (req, res) =>{
       if(user == null){
         return res.status(409).json({
             status: false,
-            message:"Incorrect email or password"
+            message:"Incorrect username or password"
         });
     }
     
-    if (user.email && (await bcrypt.compare(password, user.password))) {
+    if (user.username && (await bcrypt.compare(password, user.password))) {
         const jwt_token = jwt.sign({
             user_id: user._id,
-            email: email
+            username: username
         }, process.env.JWT_TOKEN_KEY, {
             expiresIn: "10m",
         })
@@ -88,7 +87,7 @@ export const signIn = async (req, res) =>{
     }
     return res.status(409).json({
         status: false,
-        message:"Incorrect email or password"
+        message:"Incorrect username or password"
     });
     
 }

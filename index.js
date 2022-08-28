@@ -1,6 +1,6 @@
 import "dotenv/config"
 import app from "./app.js";
-const port = process.env.PORT
+const port = process.env.PORT || 8000;
 
 
 app.get("/", (req, res) =>{
@@ -8,5 +8,5 @@ app.get("/", (req, res) =>{
 })
 
 app.listen(port, () =>{
-    console.log(`app is running at ${port}`)
+    console.log(`app is running at PORT ${port}`)
 })

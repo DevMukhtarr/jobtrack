@@ -24,14 +24,14 @@ export const jobApplied = async (req, res) =>{
     })
 }
 
-// Companies that acepted a user
+// Companies that accepted a user
 export const companyAccepted = async (req, res) =>{
     
 
 }
 
 
-// Companies that acepted a user
+// Companies that accepted a user
 export const companyRejected = async (req, res) =>{
     
 
